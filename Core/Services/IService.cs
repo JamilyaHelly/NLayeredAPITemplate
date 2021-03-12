@@ -13,7 +13,7 @@ namespace Core.Services
         Task<TEntity> SingleoRDefaultAsync(Expression<Func<TEntity, bool>> predicate);
         Task AddAsync(TEntity entity);
         Task AddRangeAsync(IEnumerable<TEntity> entities);
-        void Remove(TEntity entyti);
+        void Remove(TEntity entity);
         void RemoveRange(IEnumerable<TEntity> entities);
         TEntity Update(TEntity entity);
     }

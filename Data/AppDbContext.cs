@@ -1,5 +1,6 @@
 using Core.Models;
 using Data.Configurations;
+using Data.Seeds;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -34,6 +35,13 @@ namespace Data
             modelBuilder.ApplyConfiguration(new OrdeItemConfiguration());
             modelBuilder.ApplyConfiguration(new ProductConfiguration());
             modelBuilder.ApplyConfiguration(new UserConfiguration());
+
+            modelBuilder.ApplyConfiguration(new AddressSeed(new int[] { 1, 2 }));
+            modelBuilder.ApplyConfiguration(new CategorySeed(new int[] { 1, 2 }));
+            modelBuilder.ApplyConfiguration(new CitySeed(new int[] { 1, 2 }));
+            modelBuilder.ApplyConfiguration(new CountrySeed(new int[]{1,2}));
+            modelBuilder.ApplyConfiguration(new ProductSeed(new int[]{1,2}));
+           
 
         }
 
