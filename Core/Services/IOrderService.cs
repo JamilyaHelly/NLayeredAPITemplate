@@ -5,6 +5,6 @@ namespace Core.Services
 {
     public interface IOrderService : IService<Order>
     {
-        Task<Order> GetWithOrderItemByIdAsync(int orderitemId);
+        Task<Order> GetWithOrderItemByIdAsync(int orderId);
     }
 }
