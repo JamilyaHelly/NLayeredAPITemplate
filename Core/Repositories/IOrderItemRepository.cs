@@ -3,7 +3,7 @@ using Core.Models;
 
 namespace Core.Repositories
 {
-    public interface IOrdeItemRepository:IRepository<OrderItem>
+    public interface IOrderItemRepository:IRepository<OrderItem>
     {
 
     }

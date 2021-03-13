@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Data.Repositories
 {
-    public class OrderItemRepository : Repository<OrderItem>, IOrdeItemRepository
+    public class OrderItemRepository : Repository<OrderItem>, IOrderItemRepository
     {
 
         private AppDbContext _appDbContext{get=> _context as AppDbContext;}

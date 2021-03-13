@@ -10,7 +10,7 @@ namespace Core.UnitOfWorks
          ICityRepository City{get;}
          ICountryRepository  Country{get;}
          IInvoiceRepository Invoice{get;}
-         IOrdeItemRepository OrdeItem {get;}
+         IOrderItemRepository OrderItem {get;}
          IOrderRepository Order {get;}
          IProductRepository Product{ get;}
          IUserRepository User{get;}
