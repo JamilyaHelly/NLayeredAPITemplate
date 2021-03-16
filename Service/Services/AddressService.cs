@@ -5,7 +5,7 @@ using Core.UnitOfWorks;
 
 namespace Service.Services
 {
-    public class AddressService : Service<Address>, IAddressService
+    public class AddressService :Service<Address>, IAddressService
     {
         public AddressService(IUnitOfWork unitOfWork, IRepository<Address> repository)
         : base(unitOfWork, repository)
