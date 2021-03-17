@@ -24,8 +24,8 @@ namespace API.Controllers
          [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-               var productGetAll = await _addressService.GetAllAsync();
-            return Ok(_mapper.Map<IEnumerable<AddressDto>>(productGetAll));
+               var addressGetAll = await _addressService.GetAllAsync();
+            return Ok(_mapper.Map<IEnumerable<AddressDto>>(addressGetAll));
         }
          [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
@@ -37,7 +37,7 @@ namespace API.Controllers
         public async Task<IActionResult> Save(AddressDto addressDto)
         {
             var addressSave = await _addressService.AddAsync(_mapper.Map<Address>(addressDto));
-            return Created(string.Empty, _mapper.Map<ProductDto>(addressSave));
+            return Created(string.Empty, _mapper.Map<AddressDto>(addressSave));
 
         }
          [HttpPost("addrange")]
@@ -52,7 +52,7 @@ namespace API.Controllers
          [HttpPut]
         public IActionResult Update(AddressDto addressDto)
         {            
-            var productUpdate = _addressService.Update(_mapper.Map<Address>(addressDto));
+            var addressUpdate = _addressService.Update(_mapper.Map<Address>(addressDto));
             return NoContent();
         }
         [HttpDelete("{id}")]
