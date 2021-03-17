@@ -58,6 +58,10 @@ namespace API
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddControllers();
+            services.Configure<ApiBehaviorOptions>(option =>
+            {
+                option.SuppressModelStateInvalidFilter = true;
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
