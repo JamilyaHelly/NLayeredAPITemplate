@@ -31,7 +31,7 @@ namespace API.Controllers
         public async Task<IActionResult> GetAllAsync()
         {
             var category = await _categoryService.GetAllAsync();
-            return Ok(_mapper.Map<CategoryDto>(category));
+            return Ok(_mapper.Map<IEnumerable<CategoryDto>>(category));
         }
         [HttpGet("{id}/product")]
         public async Task<IActionResult> GetWithProductById(int id)

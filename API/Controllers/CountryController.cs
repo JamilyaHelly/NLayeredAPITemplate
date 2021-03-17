@@ -33,7 +33,7 @@ namespace API.Controllers
         public async Task<IActionResult> GetAllAsync()
         {
             var country = await _countryService.GetAllAsync();
-            return Ok(_mapper.Map<CountryDto>(country));
+            return Ok(_mapper.Map<IEnumerable<CountryDto>>(country));
         }
         [HttpGet("{id}/cities")]
         public async Task<IActionResult> GetWithCityById(int id)
