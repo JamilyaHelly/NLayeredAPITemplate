@@ -34,6 +34,15 @@ namespace API.Mapping
 
             CreateMap<User,UserDto>();
             CreateMap<UserDto,User>();
+
+             CreateMap<Category, CategoryWithProductDto>();
+             CreateMap<CategoryWithProductDto,Category>();
+
+             CreateMap<Country ,CountryWithCityDto>();
+             CreateMap<CountryWithCityDto,Country>();
+
+             CreateMap<Order,OrderWithOrderItemDto>();
+             CreateMap<OrderWithOrderItemDto,Order>();
             
         }
     }
