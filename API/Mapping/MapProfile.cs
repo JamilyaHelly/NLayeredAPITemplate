@@ -43,6 +43,9 @@ namespace API.Mapping
 
              CreateMap<Order,OrderWithOrderItemDto>();
              CreateMap<OrderWithOrderItemDto,Order>();
+             
+             CreateMap< Product,ProductWithCategoryDto>();
+             CreateMap<ProductWithCategoryDto,Product>();
             
         }
     }
