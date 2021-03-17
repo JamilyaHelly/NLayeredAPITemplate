@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.DTOs;
+using API.Filters;
 using AutoMapper;
 using Core.Models;
 using Core.Services;
@@ -10,17 +11,17 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers
 {
 
-   [Route("id/[controller]")]
-   [ApiController]
-    public class CountryController:ControllerBase
+    [Route("id/[controller]")]
+    [ApiController]
+    public class CountryController : ControllerBase
     {
         public readonly ICountryService _countryService;
         public readonly IMapper _mapper;
 
-        public CountryController(ICountryService countryService,IMapper mapper)
+        public CountryController(ICountryService countryService, IMapper mapper)
         {
-            _countryService=countryService;
-            _mapper=mapper;
+            _countryService = countryService;
+            _mapper = mapper;
         }
 
         [HttpGet("{id}")]
@@ -29,12 +30,14 @@ namespace API.Controllers
             var countryById = await _countryService.GetByIdAsync(id);
             return Ok(_mapper.Map<CountryDto>(countryById));
         }
+
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
         {
             var country = await _countryService.GetAllAsync();
             return Ok(_mapper.Map<IEnumerable<CountryDto>>(country));
         }
+
         [HttpGet("{id}/cities")]
         public async Task<IActionResult> GetWithCityById(int id)
         {
@@ -44,12 +47,15 @@ namespace API.Controllers
             return Ok(_mapper.Map<CountryWithCityDto>(countryProductId));
         }
 
+        [ValidationFilter]
         [HttpPost]
         public async Task<IActionResult> Save(CountryDto countryDto)
         {
             var countrySave = await _countryService.AddAsync(_mapper.Map<Country>(countryDto));
             return Created(string.Empty, _mapper.Map<CountryDto>(countrySave));
         }
+
+        [ValidationFilter]
         [HttpPost("addrange")]
         public async Task<IActionResult> AddRangeAsync(IEnumerable<Country> countryDtos)
         {

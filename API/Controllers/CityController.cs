@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.DTOs;
+using API.Filters;
 using AutoMapper;
 using Core.Models;
 using Core.Services;
@@ -11,35 +12,41 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CityController:ControllerBase
+    public class CityController : ControllerBase
     {
         public readonly ICityService _cityService;
         public readonly IMapper _mapper;
-        public CityController(ICityService cityService,IMapper mapper)
+        public CityController(ICityService cityService, IMapper mapper)
         {
-            _cityService=cityService;
-            _mapper=mapper;
+            _cityService = cityService;
+            _mapper = mapper;
         }
-          [HttpGet]
+
+        [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-               var cityAll = await _cityService.GetAllAsync();
+            var cityAll = await _cityService.GetAllAsync();
             return Ok(_mapper.Map<IEnumerable<CityDto>>(cityAll));
         }
-         [HttpGet("{id}")]
+
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var cityById = await _cityService.GetByIdAsync(id);
             return Ok(_mapper.Map<CityDto>(cityById));
         }
-         [HttpPost]
+
+        [ValidationFilter]
+        [HttpPost]
         public async Task<IActionResult> Save(CityDto cityDto)
         {
             var citySave = await _cityService.AddAsync(_mapper.Map<City>(cityDto));
             return Created(string.Empty, _mapper.Map<CityDto>(citySave));
 
         }
-         [HttpPost("addrange")]
+        
+        [ValidationFilter]
+        [HttpPost("addrange")]
         public async Task<IActionResult> AddRangeAsync(IEnumerable<CityDto> cityDtos)
         {
 
@@ -47,22 +54,24 @@ namespace API.Controllers
             return Ok(_mapper.Map<IEnumerable<CityDto>>(cityRange));
 
         }
-         [HttpPut]
+
+        [HttpPut]
         public IActionResult Update(CityDto cityDto)
-        {            
+        {
             var cityUpdate = _cityService.Update(_mapper.Map<City>(cityDto));
             return NoContent();
         }
+
         [HttpDelete("{id}")]
         public IActionResult Remove(int id)
         {
 
             var cityRemove = _cityService.GetByIdAsync(id).Result;
-           _cityService.Remove(cityRemove);
-
+            _cityService.Remove(cityRemove);
             return NoContent();
 
         }
+
         [HttpDelete]
         public IActionResult RemoveRange(IEnumerable<int> ids)
         {

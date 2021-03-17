@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.DTOs;
+using API.Filters;
 using AutoMapper;
 using Core.Models;
 using Core.Services;
@@ -11,37 +12,40 @@ namespace API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AddressController:ControllerBase
+    public class AddressController : ControllerBase
     {
-         private readonly IAddressService _addressService;
+        private readonly IAddressService _addressService;
         private readonly IMapper _mapper;
 
-        public AddressController(IAddressService addressService,IMapper mapper)
+        public AddressController(IAddressService addressService, IMapper mapper)
         {
-            _addressService=addressService;
-            _mapper=mapper;
+            _addressService = addressService;
+            _mapper = mapper;
         }
-         [HttpGet]
+        [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-               var addressGetAll = await _addressService.GetAllAsync();
+            var addressGetAll = await _addressService.GetAllAsync();
             return Ok(_mapper.Map<IEnumerable<AddressDto>>(addressGetAll));
         }
-         [HttpGet("{id}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var addressById = await _addressService.GetByIdAsync(id);
             return Ok(_mapper.Map<AddressDto>(addressById));
         }
-         [HttpPost]
+
+        [ValidationFilter]
+        [HttpPost]
         public async Task<IActionResult> Save(AddressDto addressDto)
         {
             var addressSave = await _addressService.AddAsync(_mapper.Map<Address>(addressDto));
             return Created(string.Empty, _mapper.Map<AddressDto>(addressSave));
 
         }
-         [HttpPost("addrange")]
 
+        [ValidationFilter]
+        [HttpPost("addrange")]
         public async Task<IActionResult> AddRangeAsync(IEnumerable<AddressDto> addressDtos)
         {
 
@@ -49,9 +53,9 @@ namespace API.Controllers
             return Ok(_mapper.Map<IEnumerable<AddressDto>>(addressRange));
 
         }
-         [HttpPut]
+        [HttpPut]
         public IActionResult Update(AddressDto addressDto)
-        {            
+        {
             var addressUpdate = _addressService.Update(_mapper.Map<Address>(addressDto));
             return NoContent();
         }
@@ -60,7 +64,7 @@ namespace API.Controllers
         {
 
             var addressRemove = _addressService.GetByIdAsync(id).Result;
-           _addressService.Remove(addressRemove);
+            _addressService.Remove(addressRemove);
 
             return NoContent();
 
