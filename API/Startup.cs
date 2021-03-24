@@ -2,13 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.DTOs;
+using API.Filters;
 using Core.Repositories;
 using Core.Services;
 using Core.UnitOfWorks;
 using Data;
 using Data.Repositories;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +21,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using Service.Services;
+using API.Extensions;
 
 namespace API
 {
@@ -34,6 +40,7 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper(typeof(Startup));
+            services.AddScoped<NotFoundFilter>();
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped(typeof(IService<>), typeof(Service.Services.Service<>));
             services.AddScoped<IAddressService, AddressService>();
@@ -57,7 +64,10 @@ namespace API
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            services.AddControllers();
+            services.AddControllers(o =>
+            {
+                o.Filters.Add(new ValidationFilter());
+            });
             services.Configure<ApiBehaviorOptions>(option =>
             {
                 option.SuppressModelStateInvalidFilter = true;
@@ -77,6 +87,8 @@ namespace API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1"));
             }
+
+            app.UseCustomException();
 
             app.UseHttpsRedirection();
 

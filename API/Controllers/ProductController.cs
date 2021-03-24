@@ -23,6 +23,7 @@ namespace API.Controllers
             _mapper = mapper;
         }
 
+        [ServiceFilter(typeof(NotFoundFilter))]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
@@ -37,6 +38,7 @@ namespace API.Controllers
             return Ok(_mapper.Map<IEnumerable<ProductDto>>(product));
         }
 
+        [ServiceFilter(typeof(NotFoundFilter))]
         [HttpGet("{id}/category")]
         public async Task<IActionResult> GetWithProductById(int id)
         {
@@ -44,7 +46,7 @@ namespace API.Controllers
             return Ok(_mapper.Map<ProductWithCategoryDto>(productCategoryId));
         }
 
-        [ValidationFilter]
+      
         [HttpPost]
         public async Task<IActionResult> Save(ProductDto productDto)
         {
@@ -52,7 +54,7 @@ namespace API.Controllers
             return Created(string.Empty, _mapper.Map<ProductDto>(productSave));
         }
 
-        [ValidationFilter]
+        
         [HttpPost("addrange")]
         public async Task<IActionResult> AddRangeAsync(IEnumerable<Product> productDtos)
         {
@@ -66,7 +68,7 @@ namespace API.Controllers
             var productupdate = _productService.Update(_mapper.Map<Product>(productDto));
             return NoContent();
         }
-
+        [ServiceFilter(typeof(NotFoundFilter))]
         [HttpDelete("{id}")]
         public IActionResult Remove(int id)
         {
