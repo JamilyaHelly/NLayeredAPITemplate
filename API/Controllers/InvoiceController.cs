@@ -24,6 +24,7 @@ namespace API.Controllers
             _mapper = mapper;
         }
 
+
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -31,12 +32,15 @@ namespace API.Controllers
             return Ok(_mapper.Map<IEnumerable<InvoiceDto>>(invoiceGetAll));
         }
 
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var invoiceById = await _invoiceService.GetByIdAsync(id);
             return Ok(_mapper.Map<CityDto>(invoiceById));
         }
+
+        
         [HttpPost]
         public async Task<IActionResult> Save(InvoiceDto invoiceDto)
         {
@@ -44,12 +48,15 @@ namespace API.Controllers
             return Created(string.Empty, _mapper.Map<InvoiceDto>(invoiceSave));
 
         }
+
+
         [HttpPost("addrange")]
         public async Task<IActionResult> AddRangeAsync(IEnumerable<InvoiceDto> invoiceDtos)
         {
             var invoiceRange = await _invoiceService.AddRangeAsync(_mapper.Map<IEnumerable<Invoice>>(invoiceDtos));
             return Ok(_mapper.Map<IEnumerable<InvoiceDto>>(invoiceRange));
         }
+
 
         [HttpPut]
         public IActionResult Update(InvoiceDto invoiceDto)

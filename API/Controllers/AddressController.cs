@@ -35,7 +35,7 @@ namespace API.Controllers
             return Ok(_mapper.Map<AddressDto>(addressById));
         }
 
-        [ValidationFilter]
+       
         [HttpPost]
         public async Task<IActionResult> Save(AddressDto addressDto)
         {
@@ -44,7 +44,7 @@ namespace API.Controllers
 
         }
 
-        [ValidationFilter]
+       
         [HttpPost("addrange")]
         public async Task<IActionResult> AddRangeAsync(IEnumerable<AddressDto> addressDtos)
         {

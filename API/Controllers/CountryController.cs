@@ -47,7 +47,6 @@ namespace API.Controllers
             return Ok(_mapper.Map<CountryWithCityDto>(countryProductId));
         }
 
-        [ValidationFilter]
         [HttpPost]
         public async Task<IActionResult> Save(CountryDto countryDto)
         {
@@ -55,7 +54,7 @@ namespace API.Controllers
             return Created(string.Empty, _mapper.Map<CountryDto>(countrySave));
         }
 
-        [ValidationFilter]
+    
         [HttpPost("addrange")]
         public async Task<IActionResult> AddRangeAsync(IEnumerable<Country> countryDtos)
         {

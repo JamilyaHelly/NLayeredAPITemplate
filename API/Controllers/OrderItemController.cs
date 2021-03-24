@@ -21,18 +21,24 @@ namespace API.Controllers
             _orderItemService=orderItemService;
             _mapper=mapper;
         }
+
+
          [HttpGet]
         public async Task<IActionResult> GetAll()
         {
                var ordeItemGetAll = await _orderItemService.GetAllAsync();
             return Ok(_mapper.Map<IEnumerable<OrderItemDto>>(ordeItemGetAll));
         }
+
+
          [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             var orderItemById = await _orderItemService.GetByIdAsync(id);
             return Ok(_mapper.Map<OrderItemDto>(orderItemById));
         }
+
+
          [HttpPost]
         public async Task<IActionResult> Save(OrderItemDto orderItemDto)
         {
@@ -40,8 +46,9 @@ namespace API.Controllers
             return Created(string.Empty, _mapper.Map<OrderItemDto>(orderItemSave));
 
         }
-         [HttpPost("addrange")]
 
+
+         [HttpPost("addrange")]
         public async Task<IActionResult> AddRangeAsync(IEnumerable<OrderItemDto> orderItemDtos)
         {
 
@@ -49,12 +56,15 @@ namespace API.Controllers
             return Ok(_mapper.Map<IEnumerable<OrderItemDto>>(ordeItemRange));
 
         }
+
          [HttpPut]
         public IActionResult Update(OrderItemDto orderItemDto)
         {            
             var ordeItemUpdate = _orderItemService.Update(_mapper.Map<OrderItem>(orderItemDto));
             return NoContent();
         }
+
+
         [HttpDelete("{id}")]
         public IActionResult Remove(int id)
         {
@@ -65,6 +75,8 @@ namespace API.Controllers
             return NoContent();
 
         }
+
+
         [HttpDelete]
         public IActionResult RemoveRange(IEnumerable<int> ids)
         {

@@ -47,7 +47,6 @@ namespace API.Controllers
         }
 
 
-        [ValidationFilter]
         [HttpPost]
         public async Task<IActionResult> Save(CategoryDto categoryDto)
         {
@@ -55,7 +54,7 @@ namespace API.Controllers
             return Created(string.Empty, _mapper.Map<CategoryDto>(categorySave));
         }
 
-        [ValidationFilter]
+       
         [HttpPost("addrange")]
         public async Task<IActionResult> AddRangeAsync(IEnumerable<Category> categoryDtos)
         {

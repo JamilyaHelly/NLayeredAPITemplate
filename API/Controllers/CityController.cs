@@ -36,7 +36,7 @@ namespace API.Controllers
             return Ok(_mapper.Map<CityDto>(cityById));
         }
 
-        [ValidationFilter]
+        
         [HttpPost]
         public async Task<IActionResult> Save(CityDto cityDto)
         {
@@ -45,7 +45,7 @@ namespace API.Controllers
 
         }
         
-        [ValidationFilter]
+        
         [HttpPost("addrange")]
         public async Task<IActionResult> AddRangeAsync(IEnumerable<CityDto> cityDtos)
         {
